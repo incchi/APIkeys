@@ -37,7 +37,7 @@ const userController = {
             res.send(user.keys)
         
     },
-    header :async(req,res)=> {
+    apiAccess :async(req,res)=> {
         const a =await verifyKey(req.body,req.headers)
         console.log(a);
     }
