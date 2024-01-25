@@ -12,7 +12,26 @@ const userUtil = {
                 else false
             }else return false
         }
+    },
+    findUser : async(data)=>{
+        const {email,username} = data;
+        const userDB = await userModel.findOne({$or:[{email:email},{username:username}]})
+        if(userDB) return userDB;
+        else return false
+        
+    },
+
+    verifyKey :async(data,header)=> {
+        const user =await userUtil.findUser(data)
+        await user.keys.find(apiKey => {
+            if(apiKey === header.api){
+                const result = 10
+                console.log("millo");
+                return result
+            }
+        });
     }
+
 }
 
 module.exports = {...userUtil}

@@ -1,7 +1,7 @@
 const userModel = require("../models/userModel")
 const { hashPassword, comparePassword } = require("../utils/hashPassword")
 const { genKey } = require("../utils/keyGenerator")
-const { login } = require("../utils/user")
+const { login, verifyKey } = require("../utils/user")
 
 const userController = {
     register : async(req,res)=>{
@@ -27,14 +27,19 @@ const userController = {
 
     key : async(req,res)=>{
         const response =await login(req.body)
-        console.log(response);
         if(response.value) {
             const user = response.userDB;
             await user.keys.push(await genKey())
             await user.save()
-            // console.log(user);
             res.send(user.keys)
         }
+    },
+    header :async(req,res)=> {
+        // if(await verifyKey(req.body,req.headers)) {
+        //     res.send("ncdsmhbcnj")
+        // }
+        const a =await verifyKey(req.body,req.headers)
+        console.log(a);
     }
 }
 
