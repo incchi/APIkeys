@@ -1,8 +1,8 @@
 const userModel = require("../models/userModel")
 const { hashPassword, comparePassword } = require("../utils/hashPassword")
 const { genKey } = require("../utils/keyGenerator")
-const { login, verifyKey } = require("../utils/user")
-
+const { login, verifyKey, findUser } = require("../utils/user")
+const { createToken } = require("./jwtController")
 const userController = {
     register : async(req,res)=>{
         const { name,email,username,contact,password} = req.body
@@ -21,23 +21,23 @@ const userController = {
     },
 
     login : async(req,res)=>{
-        const response = await login(req.body)
-        res.send(response)
+        const response = await login(req.body) // check pass and username/email
+        if(response) { 
+            // await createToken(req,res)  // token created
+            res.send(response)
+        }else { 
+            res.send('error')
+        }
     },
 
     key : async(req,res)=>{
-        const response =await login(req.body)
-        if(response.value) {
-            const user = response.userDB;
+            const user =await findUser(req.body);
             await user.keys.push(await genKey())
             await user.save()
             res.send(user.keys)
-        }
+        
     },
     header :async(req,res)=> {
-        // if(await verifyKey(req.body,req.headers)) {
-        //     res.send("ncdsmhbcnj")
-        // }
         const a =await verifyKey(req.body,req.headers)
         console.log(a);
     }
