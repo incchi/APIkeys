@@ -19,7 +19,7 @@ const jwtController = {
     },
     verifyToken :async(req,res,next)=> {
         const authHeader =await req.headers?.authorisation;
-        console.log(authHeader);
+        // console.log(authHeader);
         if(authHeader){
             const token = authHeader.split(' ')[1];
             const user = await jwt.verify(token,key)

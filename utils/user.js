@@ -1,6 +1,8 @@
 const userModel = require("../models/userModel")
 const { comparePassword } = require("./hashPassword")
 const {createToken,verifyToken } = require('../controllers/jwtController')
+const fs = require('fs')
+
 const userUtil = {
     login : async(data)=>{
         const {email,username,password} = data
@@ -28,6 +30,22 @@ const userUtil = {
         const user =await userUtil.findUser(data)
         const isValidKey = user.keys.includes(header.api)
         return isValidKey;
+    },
+
+    logs : async(username,data)=>{
+        const logData = data
+        const dirPath = `./logs/${username}`
+        if(!fs.existsSync(dirPath)){
+            fs.mkdir(dirPath,(error)=>{
+                if(error) console.log(error);
+            })
+        }
+
+
+        fs.appendFile(`${dirPath}/${username}.txt`,logData+"\n",(error)=>{
+            if(error) return error
+            else return "log written successfully "
+        })
     }
 
 }
