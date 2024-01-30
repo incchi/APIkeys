@@ -1,5 +1,7 @@
 const jwt  = require('jsonwebtoken')
-const key = "uhvadnkjcsm;sgjksfhbvnkjdlmksndhbskjfvmlsdk"
+require('dotenv').config()
+const key = process.env.JWT_KEY
+
 const jwtController = {
     createToken :async(req,res,next) => {
         const{email,username} =req.body
