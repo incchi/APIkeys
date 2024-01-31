@@ -1,5 +1,3 @@
-const rateLimit = require('express-rate-limit')
-
 const { findUser, logs } = require('../utils/user')
 const { premiumRateLimiter, defaultRateLimiter } = require('../utils/apiRateLimit')
 const Middeleware = require('express')
@@ -24,14 +22,17 @@ const apiMiddleware = {
     rateLimiter : async(req,res,next)=>{
         const user = await findUser(req.body)
         const hasPremium = user.premium;
-        // console.log(hasPremium);
+        console.log(hasPremium);
+        let limiter;
         if(hasPremium) {
-            // console.log("jrci");
-            console.log(premiumRateLimiter())
+            console.log("premium");
+            limiter = premiumRateLimiter()
         }else {
-            // console.log("ckmwe");
-            console.log(await defaultRateLimiter())
+            console.log("default");
+            limiter = await defaultRateLimiter()
+            console.log(limiter);
         }
+        limiter.schedule(next)
         
     }
 

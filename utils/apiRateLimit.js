@@ -4,6 +4,7 @@ const Bottleneck = require('bottleneck')
     const limiter = new Bottleneck({
         maxConcurrent : 10
     })
+    return limiter
 }
 
 
@@ -11,6 +12,7 @@ async function defaultRateLimiter(){
     const limiter = new Bottleneck({
         maxConcurrent : 10
     })
+    return limiter
 }
 
 module.exports = {
