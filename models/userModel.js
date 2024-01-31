@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
         },
         keys : {
             type : [String]
+        },
+        premium : {
+            type : Boolean,
+            default : false
         }
 
     },{

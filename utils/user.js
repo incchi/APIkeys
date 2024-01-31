@@ -26,11 +26,11 @@ const userUtil = {
         
     },
 
-    verifyKey :async(data,header)=> {
-        const user =await userUtil.findUser(data)
-        const isValidKey = user.keys.includes(header.api)
-        return isValidKey;
-    },
+    // verifyKey :async(data,header)=> {
+    //     const user =await userUtil.findUser(data)
+    //     const isValidKey = user.keys.includes(header?.api)
+    //     return isValidKey;
+    // },
 
     logs : async(username,data)=>{
         const logData = data

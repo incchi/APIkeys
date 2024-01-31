@@ -9,7 +9,7 @@ if(host == "ATLAS_HOST"){
 }
 else{
     mongoose.connect("mongodb://localhost:27017/api")
-    .then(console.log('connected to DB'))
+    .then(console.log('connected to local DB'))
     .catch((error)=> console.log(error))
 }
 

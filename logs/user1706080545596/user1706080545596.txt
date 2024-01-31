@@ -1,4 +1,0 @@
-/generatekey POST/generatekey POST/generatekey POST/generatekey POST/generatekey POST/generatekey POST/generatekey POST/generatekey POST
-/generatekey POST
-/generatekey POST 
-/generatekey POST 

@@ -1,1 +1,0 @@
-/generatekey POST/generatekey POST

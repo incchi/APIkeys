@@ -31,15 +31,16 @@ const userController = {
 
     key : async(req,res)=>{
             const user =await findUser(req.body);
-            await logs(user.username,`${req.url} ${req.method}`)
+            await logs(user.username,`${req.url} ${req.method} @ ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`)
+            user.premium = req.body.premium ;
             await user.keys.push(await genKey())
             await user.save()
             res.send(user.keys)
         
     },
     apiAccess :async(req,res)=> {
-        const a =await verifyKey(req.body,req.headers)
-        console.log(a);
+        
+        res.send('hitting ');
     }
 }
 
