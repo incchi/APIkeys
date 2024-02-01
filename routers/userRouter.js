@@ -3,7 +3,7 @@ const { register, login, key, header, apiAccess } = require('../controllers/user
 const { create } = require('../models/userModel')
 // const verifyCookieUtils = require('../utils/verifyCookie')
 const { verifyToken, createToken } = require('../controllers/jwtController')
-const { verifyKey, rateLimiter } = require('../middlewares/apiMiddleware')
+const { verifyKey, rateLimiter,  } = require('../middlewares/apiMiddleware')
 
 const router = Router()
 

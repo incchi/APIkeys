@@ -1,36 +1,10 @@
-const Bottleneck = require('bottleneck')
+const rateLimiter = require('express-rate-limit')
 
-function premiumRateLimiter (){
-    const limiter = new Bottleneck({
-        maxConcurrent : 10
-    })
-    return limiter
-}
+const apiRateLimitUtil = rateLimiter({
+    windowMs : 60*1000,
+    max : 2,
+    message : `you have exceeded 2 req `,
+    headers : true
+});
 
-
-function defaultRateLimiter(){
-    const limiter = new Bottleneck({
-        maxConcurrent : 2
-    })
-    return limiter
-}
-//limiter - premium//default
-//apiFunction - function that does call the api
-//...args - reset parameter syntex indefinite number of arguments
-async function makeApiCall (limiter,next,req,res){
-    // return await limiter.schedule(()=> apiFunction(...args));
-    return await limiter.schedule(() => new Promise((resolve, reject) => {
-        next(req, res, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    }));
-}
-module.exports = {
-    premiumRateLimiter,
-    defaultRateLimiter,
-    makeApiCall
-}
+module.exports = apiRateLimitUtil

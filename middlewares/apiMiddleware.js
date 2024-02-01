@@ -1,11 +1,14 @@
-const { premiumRateLimiter, defaultRateLimiter, makeApiCall } = require('../utils/apiRateLimit')
+const { off } = require('../models/userModel')
+const apiRateLimitUtil = require('../utils/apiRateLimit')
+// const { premiumRateLimiter, defaultRateLimiter, makeApiCall } = require('../utils/apiRateLimit')
 const { findUser, logs } = require('../utils/user')
 const Middeleware = require('express')
 const middleware = Middeleware()
+const setRateLimit = require('express-rate-limit')
 
 
-const premiumLimiter = premiumRateLimiter()
-const defaultLimiter = defaultRateLimiter()
+// const premiumLimiter = premiumRateLimiter()
+// const defaultLimiter = defaultRateLimiter()
 const apiMiddleware = {
     // generateKey : async(req,res,next) =>{
     //     const user = await findUser(req.body)
@@ -27,26 +30,24 @@ const apiMiddleware = {
         const user = await findUser(req.body)
         const hasPremium = user.premium;
         console.log(hasPremium);
-        let limiter;
-        if(hasPremium) {
-            console.log("premium");
-            limiter = premiumLimiter
-        }else {
-            console.log("default");
-            limiter = defaultLimiter
-            
-        }
-        console.log(limiter);
-        // await makeApiCall(limiter,next)
-        try {
-            await makeApiCall(limiter, next, req, res);
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('An error occurred');
-        }
+        if(hasPremium){
+            premiumLimitMiddleware(req,res,next)
+        }else defaultLimitMiddleware(req,res,next)
         
     }
 
 }
-
+const premiumLimitMiddleware = setRateLimit({
+    windowMs: 60 * 1000,
+    max: 5,
+    message: "You have exceeded your 5 requests per minute limit.",
+    headers: true,
+  });
+const defaultLimitMiddleware = setRateLimit({
+    windowMs: 60 * 1000,
+    max: 2,
+    message: "You have exceeded your 2 requests per minute limit.",
+    headers: true,
+  });
+  
 module.exports = {...apiMiddleware}
