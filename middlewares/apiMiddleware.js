@@ -1,7 +1,11 @@
+const { premiumRateLimiter, defaultRateLimiter, makeApiCall } = require('../utils/apiRateLimit')
 const { findUser, logs } = require('../utils/user')
-const { premiumRateLimiter, defaultRateLimiter } = require('../utils/apiRateLimit')
 const Middeleware = require('express')
 const middleware = Middeleware()
+
+
+const premiumLimiter = premiumRateLimiter()
+const defaultLimiter = defaultRateLimiter()
 const apiMiddleware = {
     // generateKey : async(req,res,next) =>{
     //     const user = await findUser(req.body)
@@ -26,13 +30,20 @@ const apiMiddleware = {
         let limiter;
         if(hasPremium) {
             console.log("premium");
-            limiter = premiumRateLimiter()
+            limiter = premiumLimiter
         }else {
             console.log("default");
-            limiter = await defaultRateLimiter()
-            console.log(limiter);
+            limiter = defaultLimiter
+            
         }
-        limiter.schedule(next)
+        console.log(limiter);
+        // await makeApiCall(limiter,next)
+        try {
+            await makeApiCall(limiter, next, req, res);
+        } catch (err) {
+            console.error(err);
+            res.status(500).send('An error occurred');
+        }
         
     }
 
