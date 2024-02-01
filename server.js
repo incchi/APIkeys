@@ -1,11 +1,14 @@
 require('./connection/initialisation')
 require('dotenv').config()
 const express = require('express')
-const userRouter = require('./routers/userRouter')
 const app = express()
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const port = process.env.PORT 
+
+const userRouter = require('./routers/userRouter')
+const marketRouter = require('./routers/marketRouter')
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -17,5 +20,7 @@ app.use((req,res,next)=>{
 })
 
 app.use('/api',userRouter)
+app.use('/api',marketRouter)
+
 
 app.listen(port,()=>console.log(port))

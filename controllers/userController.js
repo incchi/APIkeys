@@ -32,16 +32,29 @@ const userController = {
     key : async(req,res)=>{
             const user =await findUser(req.body);
             await logs(user.username,`${req.url} ${req.method} @ ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`)
+            let role = ""
+            if(req.body.role == undefined) {
+                role = "user"
+            }else role = req.body.role
+
+
             user.premium = req.body.premium ;
-            await user.keys.push(await genKey())
+            await user.keys.push({value : await genKey(),role :role})
+            
             await user.save()
             res.send(user.keys)
-        
     },
     apiAccess :async(req,res)=> {
         
         res.send('hitting ');
-    }
+    },
+    // assignRole : async(req,res)=>{
+    //     const user = await findUser(req.body);
+    //     await logs(user.username,`${req.url} ${req.method} @ ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`)
+    //     user.role = req.body.role
+    //     await user.save()
+    //     res.send(`role assigned as ${user.role}`)
+    // }
 }
 
 module.exports = {...userController}

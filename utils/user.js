@@ -18,6 +18,7 @@ const userUtil = {
             }else return false
         }
     },
+
     findUser : async(data)=>{
         const {email,username} = data;
         const userDB = await userModel.findOne({$or:[{email:email},{username:username}]})
@@ -25,12 +26,6 @@ const userUtil = {
         else return false
         
     },
-
-    // verifyKey :async(data,header)=> {
-    //     const user =await userUtil.findUser(data)
-    //     const isValidKey = user.keys.includes(header?.api)
-    //     return isValidKey;
-    // },
 
     logs : async(username,data)=>{
         const logData = data
@@ -41,12 +36,11 @@ const userUtil = {
             })
         }
 
-
         fs.appendFile(`${dirPath}/${username}.txt`,logData+"\n",(error)=>{
             if(error) return error
             else return "log written successfully "
         })
-    }
+    },
 
 }
 

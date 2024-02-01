@@ -10,6 +10,6 @@ const router = Router()
 router.post('/register',register)
 router.get('/login',createToken,login)
 router.post('/generatekey',key)
-router.post('/access',verifyKey,rateLimiter,apiAccess)
+router.post('/apilimit',verifyKey,rateLimiter,apiAccess)
 
 module.exports = router

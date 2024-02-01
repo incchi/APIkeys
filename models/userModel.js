@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema(
         premium : {
             type : Boolean,
             default : false
+        },
+        role : {
+            type : String,
+            default : "user"
         }
 
     },{
