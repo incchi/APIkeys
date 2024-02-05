@@ -2,9 +2,26 @@ const { findUser } = require("../utils/user")
 
 const Roles = ["admin","manager","user"]
 
-// const userRoleMiddleware = {
-//     verifyRole : async(req,res,next)=>{
-//         const user = findUser(req.body)
-        
-//     }
-// }
+const userRoleMiddleware = {
+    adminRole : async(req,res,next)=>{
+        const user = await findUser(req.body)
+        if(user.role == Roles[0]){
+            next()
+        }else res.status(401)
+    },
+    managerRole : async(req,res,next)=>{
+        const user = await findUser(req.body)
+        if(user.role == Roles[1]){
+            next()
+        }else res.status(401)
+    },
+    userRole : async(req,res,next)=>{
+        const user = await findUser(req.body)
+        if(user.role == Roles[1]){
+            next()
+        }else res.status(401)
+    },
+
+}
+
+module.exports = {...userRoleMiddleware}
