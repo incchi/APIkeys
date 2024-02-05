@@ -26,16 +26,17 @@ const userSchema = new mongoose.Schema(
             type : String,
             required:true
         },
-        keys : {
-            type : [String]
-        },
+        keys : [{
+            value : {
+                type : String
+            },
+            role : {
+                type : String
+            }
+        }],
         premium : {
             type : Boolean,
             default : false
-        },
-        role : {
-            type : String,
-            default : "user"
         }
 
     },{

@@ -37,13 +37,14 @@ const userController = {
                 role = "user"
             }else role = req.body.role
 
-
             user.premium = req.body.premium ;
-            await user.keys.push({value : await genKey(),role :role})
+            await user.keys.push({value : await genKey(),role : role})  
             
             await user.save()
             res.send(user.keys)
     },
+
+    
     apiAccess :async(req,res)=> {
         
         res.send('hitting ');

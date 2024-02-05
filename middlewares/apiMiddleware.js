@@ -21,8 +21,7 @@ const apiMiddleware = {
     // },
     verifyKey : async(req,res,next)=>{
         const user =await findUser(req.body)
-        // console.log(req.headers.api);
-        const isValidKey =await user.keys.includes(req.headers?.api)
+        const isValidKey =await user.keys.find((key)=> key.value==req.headers?.api)
         if(isValidKey) next()
         else res.status(401).send(`not an authorised key`)
     },

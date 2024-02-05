@@ -16,9 +16,7 @@ const marketController = {
     },
 
     updateStore : async(req,res)=>{
-        console.log("a");
-        const user = await findUser(req.body)
-        console.log(user.role);
+        
     }
 }
 
