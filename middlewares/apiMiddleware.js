@@ -28,7 +28,6 @@ const apiMiddleware = {
     rateLimiter : async(req,res,next)=>{
         const user = await findUser(req.body)
         const hasPremium = user.premium;
-        console.log(hasPremium);
         if(hasPremium){
             premiumLimitMiddleware(req,res,next)
         }else defaultLimitMiddleware(req,res,next)

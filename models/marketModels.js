@@ -4,7 +4,8 @@ const marketSchema = new mongoose.Schema(
     {
         storeID : {
             type : Number,
-            required : true
+            required : true,
+            unique : true
         },
         storeName : {
             type : String,

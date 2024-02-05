@@ -5,7 +5,7 @@
     // http://localhost:400/api/apilimit    // premium user can get 5 api hits in a min else default get 2
     // http://localhost:400/api/addstore   // only admin can add store
     // http://localhost:400/api/updatestore // either admin or manager can edit the store list 
-    // http://localhost:400/api/nearbystores  // user can check the nearby stores to him
+    // http://localhost:400/api/nearbystores  // user can check the nearby stores to him(to )
     
 
 
